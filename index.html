@@ -1,204 +1,92 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Asseria Gradnja</title>
-  <meta name="description" content="Asseria Gradnja — renovacije, uređenje enterijera i eksterijera, ključ u ruke.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* small custom styles */
-    .hero-gradient { background-image: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)); }
-    .card-anim { transition: transform .35s ease, box-shadow .35s ease; }
-    .card-anim:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.15); }
-    /* lightbox */
-    .lightbox { background: rgba(0,0,0,0.8); position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:60; }
-    .lightbox img { max-width:90%; max-height:90%; border-radius:8px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASSERIA Gradnja j.d.o.o.</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="antialiased text-gray-800 bg-gray-50">
+<body>
+  <!-- Navigacija -->
+  <nav>
+    <div class="logo">ASSERIA Gradnja</div>
+    <ul>
+      <li><a href="#hero">Početna</a></li>
+      <li><a href="#usluge">Usluge</a></li>
+      <li><a href="#onama">O nama</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
 
-  <!-- NAV -->
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <img src="logo.png" alt="Logo" class="w-12 h-12 object-cover rounded-md shadow-sm">
-        <div>
-          <a href="/" class="text-xl font-extrabold text-gray-900">Asseria Gradnja</a>
-          <p class="text-xs text-gray-500 -mt-1">Uređenje enterijera & eksterijera — ključ u ruke</p>
-        </div>
-      </div>
-      <nav class="hidden md:flex gap-6 items-center">
-        <a href="#onama" class="text-gray-600 hover:text-gray-900">O nama</a>
-        <a href="#usluge" class="text-gray-600 hover:text-gray-900">Usluge</a>
-        <a href="#galerija" class="text-gray-600 hover:text-gray-900">Galerija</a>
-        <a href="#kontakt" class="text-gray-600 hover:text-gray-900">Kontakt</a>
-        <a href="mailto:info@asseria-gradnja.hr" class="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700">Kontakt</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden p-2 rounded-md bg-gray-100">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"/></svg>
-      </button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section id="hero" class="relative hero-gradient" style="background-image: url('naslovna.jpg'); background-size:cover; background-position:center;">
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="max-w-6xl mx-auto px-6 py-28 relative z-10">
-      <div class="grid md:grid-cols-2 gap-8 items-center">
-        <div class="text-white">
-          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg">Asseria Gradnja</h1>
-          <p class="mt-4 text-lg md:text-xl max-w-xl">Renoviramo kuće i stanove sistemom <strong>ključ u ruke</strong>. Također nudimo izgradnju niskogradnje po sistemu ključ u ruke.</p>
-          <div class="mt-8 flex gap-4">
-            <a href="#usluge" class="px-6 py-3 bg-white text-gray-900 rounded-lg shadow hover:scale-105 transition">Naše usluge</a>
-            <a href="#galerija" class="px-6 py-3 border border-white/30 text-white rounded-lg hover:bg-white/10 transition">Galerija radova</a>
-          </div>
-        </div>
-        <div class="hidden md:block">
-          <!-- small feature cards -->
-          <div class="grid gap-4">
-            <div class="bg-white rounded-xl p-4 card-anim shadow-sm">
-              <h3 class="font-semibold">Ključ u ruke</h3>
-              <p class="text-sm text-gray-600 mt-2">Projekt, materijali, izvedba — mi brinemo o svemu.</p>
-            </div>
-            <div class="bg-white rounded-xl p-4 card-anim shadow-sm">
-              <h3 class="font-semibold">Fleksibilnost</h3>
-              <p class="text-sm text-gray-600 mt-2">Radimo s različitim budžetima i rokovima.</p>
-            </div>
-          </div>
-        </div>
+  <!-- Hero -->
+  <section id="hero" class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>ASSERIA Gradnja j.d.o.o.</h1>
+      <p>Vaša vizija, naša izgradnja</p>
+      <a href="#kontakt">Kontaktirajte nas</a>
+      <div class="contact-info">
+        📞 099 513 3773 <br>
+        ✉️ asseriagradnja@gmail.com <br>
+        📍 Benkovačko selo 122, 23420 Benkovac
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="onama" class="py-16">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="text-3xl font-bold">O nama</h2>
-      <p class="mt-4 text-gray-600">Asseria Gradnja pruža kompletna rješenja za uređenje interijera i eksterijera. Od manjeg adaptacijskog rada do izgradnje niskogradnje — radimo profesionalno, brzo i pouzdano.</p>
-      <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow card-anim">
-          <h4 class="font-semibold">Iskustvo</h4>
-          <p class="text-sm text-gray-500 mt-2">Tim stručnjaka s više godina iskustva.</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow card-anim">
-          <h4 class="font-semibold">Kvaliteta</h4>
-          <p class="text-sm text-gray-500 mt-2">Koristimo provjerene materijale i majstore.</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow card-anim">
-          <h4 class="font-semibold">Podrška</h4>
-          <p class="text-sm text-gray-500 mt-2">Pomažemo od planiranja do završetka projekta.</p>
-        </div>
+  <!-- Usluge -->
+  <section id="usluge">
+    <h2>Naše usluge</h2>
+    <div class="usluge-grid">
+      <div class="usluga">
+        <h3>Adaptacija</h3>
+        <p>Adaptacija kupaonica, stanova ili kuća sistemom ključ u ruke.</p>
+      </div>
+      <div class="usluga">
+        <h3>Izgradnja niskogradnje</h3>
+        <p>Kompletna izgradnja niskogradnje sistemom ključ u ruke.</p>
       </div>
     </div>
   </section>
 
-  <!-- SERVICES -->
-  <section id="usluge" class="py-16 bg-gray-50">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center">Naše usluge</h2>
-      <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <div class="p-6 bg-white rounded-xl shadow card-anim">
-          <div class="text-red-600 mb-3">🔨</div>
-          <h3 class="font-semibold text-lg">Renoviranje</h3>
-          <p class="text-sm text-gray-500 mt-2">Kompletne adaptacije stanova i kuća, suvremeni materijali i završna obrada.</p>
-        </div>
-        <div class="p-6 bg-white rounded-xl shadow card-anim">
-          <div class="text-red-600 mb-3">🌿</div>
-          <h3 class="font-semibold text-lg">Eksterijer</h3>
-          <p class="text-sm text-gray-500 mt-2">Uređenje okućnica, fasada i vanjskih prostora.</p>
-        </div>
-        <div class="p-6 bg-white rounded-xl shadow card-anim">
-          <div class="text-red-600 mb-3">🏗️</div>
-          <h3 class="font-semibold text-lg">Niskogradnja</h3>
-          <p class="text-sm text-gray-500 mt-2">Izgradnja manjih objekata i infrastrukturni radovi.</p>
-        </div>
-      </div>
-    </div>
+  <!-- O nama -->
+  <section id="onama">
+    <h2>O nama</h2>
+    <p>
+      ASSERIA Gradnja j.d.o.o. je građevinska tvrtka posvećena kvaliteti, pouzdanosti i
+      profesionalnom pristupu svakom projektu. Specijalizirani smo za adaptacije i izgradnju
+      sustavom "ključ u ruke", pružajući klijentima sigurnost i povjerenje u svakoj fazi gradnje.
+      Naša misija je ostvariti vašu viziju stvaranjem prostora koji traju i zadovoljavaju najviše standarde.
+    </p>
   </section>
 
-  <!-- GALLERY -->
-  <section id="galerija" class="py-16">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center">Galerija radova</h2>
-      <p class="text-center text-gray-500 mt-3">Klikni na fotografiju za uvećanje.</p>
-      <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        <img src="rad1.jpg" alt="rad1" class="rounded-lg cursor-pointer hover:scale-105 transition" onclick="openLightbox(this.src)">
-        <img src="rad2.jpg" alt="rad2" class="rounded-lg cursor-pointer hover:scale-105 transition" onclick="openLightbox(this.src)">
-        <img src="rad3.jpg" alt="rad3" class="rounded-lg cursor-pointer hover:scale-105 transition" onclick="openLightbox(this.src)">
-        <img src="rad4.jpg" alt="rad4" class="rounded-lg cursor-pointer hover:scale-105 transition" onclick="openLightbox(this.src)">
-      </div>
+  <!-- Kontakt -->
+  <section id="kontakt">
+    <h2>Kontaktirajte nas</h2>
+    <div class="kontakt-info">
+      📞 099 513 3773 <br>
+      ✉️ asseriagradnja@gmail.com <br>
+      📍 Benkovačko selo 122, 23420 Benkovac
     </div>
+    <form>
+      <input type="text" placeholder="Vaše ime" required>
+      <input type="email" placeholder="Vaš email" required>
+      <textarea rows="5" placeholder="Vaša poruka" required></textarea>
+      <button type="submit">Pošaljite poruku</button>
+    </form>
   </section>
 
-  <!-- CONTACT -->
-  <section id="kontakt" class="py-16 bg-gray-50">
-    <div class="max-w-4xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-start">
-      <div>
-        <h2 class="text-2xl font-bold">Kontakt</h2>
-        <p class="mt-4 text-gray-600">Za upite i ponude nazovi ili pošalji poruku.</p>
-        <ul class="mt-6 space-y-3 text-gray-700">
-          <li>📍 Benkovačko selo 122, 23420 Benkovac</li>
-          <li>📞 <a href="tel:+385911234567" class="text-red-600">+385 91 123 4567</a></li>
-          <li>✉️ <a href="mailto:info@asseria-gradnja.hr" class="text-red-600">info@asseria-gradnja.hr</a></li>
-        </ul>
-        <div class="mt-6">
-          <a href="https://www.google.com/maps/search/?api=1&query=Benkova%C4%8Dko+%20selo+122+23420+Benkovac" target="_blank" class="px-4 py-2 bg-red-600 text-white rounded-lg">Pogledaj lokaciju</a>
-        </div>
-      </div>
-      <form id="contactForm" class="bg-white p-6 rounded-xl shadow" onsubmit="submitContact(event)">
-        <label class="block text-sm font-medium text-gray-700">Ime</label>
-        <input required class="mt-1 w-full border-gray-200 rounded-md shadow-sm" id="cf_name">
-        <label class="block text-sm font-medium text-gray-700 mt-3">Email</label>
-        <input required type="email" class="mt-1 w-full border-gray-200 rounded-md shadow-sm" id="cf_email">
-        <label class="block text-sm font-medium text-gray-700 mt-3">Poruka</label>
-        <textarea required class="mt-1 w-full border-gray-200 rounded-md shadow-sm" rows="4" id="cf_msg"></textarea>
-        <button class="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg" type="submit">Pošalji poruku</button>
-        <p id="cf_msg_info" class="text-sm text-green-600 mt-3 hidden">Poruka poslana (demo).</p>
-      </form>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="bg-gray-900 text-gray-300 py-8">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="font-medium">Asseria Gradnja</p>
-      <p class="text-sm mt-2">© <span id="year"></span> Sva prava pridržana.</p>
+  <!-- Footer -->
+  <footer>
+    © 2025 ASSERIA Gradnja j.d.o.o. | Sva prava pridržana |
+    <a href="mailto:asseriagradnja@gmail.com">asseriagradnja@gmail.com</a>
+    <div class="social-links">
+      <a href="https://instagram.com/asseria_gradnja" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.tiktok.com/@adaptacije_asseria" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
     </div>
   </footer>
-
-  <!-- Lightbox element (hidden) -->
-  <div id="lightbox" class="hidden fixed inset-0 z-50 items-center justify-center lightbox" onclick="closeLightbox()">
-    <img id="lightboxImg" src="" alt="preview">
-  </div>
-
-  <script>
-    // small helpers
-    document.getElementById('year').innerText = new Date().getFullYear();
-    // mobile menu
-    const menuBtn = document.getElementById('menuBtn');
-    menuBtn.addEventListener('click', ()=>{
-      const nav = document.querySelector('nav');
-      if(nav.classList.contains('hidden')) nav.classList.remove('hidden');
-      else nav.classList.add('hidden');
-    });
-    // lightbox
-    function openLightbox(src){
-      const lb = document.getElementById('lightbox');
-      document.getElementById('lightboxImg').src = src;
-      lb.classList.remove('hidden');
-    }
-    function closeLightbox(){
-      const lb = document.getElementById('lightbox');
-      lb.classList.add('hidden');
-      document.getElementById('lightboxImg').src = '';
-    }
-    // contact demo
-    function submitContact(e){
-      e.preventDefault();
-      document.getElementById('cf_msg_info').classList.remove('hidden');
-      setTimeout(()=>{ document.getElementById('cf_msg_info').classList.add('hidden'); document.getElementById('contactForm').reset(); }, 2000);
-    }
-  </script>
 </body>
 </html>
