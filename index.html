@@ -1,39 +1,35 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Asseria Gradnja - Admin verzija</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asseria Gradnja</title>
   <style>
-    body{font-family:sans-serif;margin:0;padding:0;background:#f4f4f4;color:#222}
-    header{min-height:300px;background-size:cover;background-position:center;color:#fff;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
-    header .overlay{position:absolute;inset:0;background:rgba(0,0,0,.4)}
-    header .content{position:relative;z-index:1}
-    header img{width:120px;height:auto;border-radius:8px;margin-bottom:1rem}
-    nav{background:#222;color:#fff;text-align:center;padding:.5rem}
-    nav a{color:#fff;text-decoration:none;margin:0 1rem}
-    section{padding:2rem;max-width:1000px;margin:auto}
-    h2{color:#c8102e}
-    .gallery,.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
-    .gallery img,.shop img{width:100%;border-radius:6px}
-    footer{background:#222;color:#fff;text-align:center;padding:1rem}
-    .admin-login,.admin-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:1rem;border:1px solid #ccc;border-radius:8px;z-index:1000;display:none;width:320px}
-    input,textarea,button{width:100%;margin:.3rem 0;padding:.5rem}
-    .btn{background:#c8102e;color:#fff;border:none;border-radius:5px;cursor:pointer}
+    body { font-family:sans-serif; margin:0; padding:0; background:#f4f4f4; color:#222 }
+    header { min-height:300px; background:#222; color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    nav { background:#c8102e; color:#fff; text-align:center; padding:.5rem }
+    nav a { color:#fff; margin:0 1rem; text-decoration:none }
+    section { padding:2rem; max-width:1000px; margin:auto }
+    footer { background:#222; color:#fff; text-align:center; padding:1rem }
+    .admin-login,.admin-panel { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:1rem; border:1px solid #ccc; border-radius:8px; z-index:1000; display:none; width:320px }
     .tabs{display:flex;gap:.5rem;margin-bottom:1rem}
     .tabs button{flex:1;padding:.5rem}
     .tab-content{display:none}
     .tab-content.active{display:block}
+    input,textarea,button{width:100%;margin:.3rem 0;padding:.5rem}
+    .btn{background:#c8102e;color:#fff;border:none;border-radius:5px;cursor:pointer}
   </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 </head>
 <body>
+
 <header id="hero">
-  <div class="overlay"></div>
-  <div class="content">
-    <img id="logo" src="logo.png" alt="Logo">
-    <h1 id="hero-title">Asseria Gradnja</h1>
-    <p id="hero-sub">Uređenje enterijera i eksterijera • Ključ u ruke</p>
-  </div>
+  <h1 id="hero-title">Asseria Gradnja</h1>
+  <p id="hero-sub">Uređenje enterijera i eksterijera • Ključ u ruke</p>
 </header>
 <nav>
   <a href="#onama">O nama</a>
@@ -42,41 +38,49 @@
   <a href="#shop">Shop</a>
   <a href="#kontakt">Kontakt</a>
 </nav>
+
 <section id="onama">
   <h2 id="about-title">O nama</h2>
-  <p id="about-text">Mi smo specijalizirani za renoviranje kuća i stanova, te niskogradnju po sistemu ključ u ruke.</p>
+  <p id="about-text">Specijalizirani smo za renoviranje kuća i stanova te niskogradnju sistemom ključ u ruke.</p>
 </section>
+
 <section id="usluge">
-  <h2 id="services-title">Naše usluge</h2>
+  <h2>Naše usluge</h2>
   <ul id="services"></ul>
 </section>
+
 <section id="galerija">
   <h2>Galerija</h2>
-  <div class="gallery" id="gallery"></div>
+  <div id="gallery"></div>
 </section>
+
 <section id="shop">
-  <h2>Web shop</h2>
-  <div class="shop" id="shop"></div>
+  <h2>Shop</h2>
+  <div id="shop-items"></div>
 </section>
+
 <section id="kontakt">
   <h2>Kontakt</h2>
   <p>📞 <span id="contact-phone">+385 91 123 4567</span></p>
   <p>✉️ <span id="contact-email">info@asseria-gradnja.hr</span></p>
   <p>📍 <span id="contact-address">Benkovačko selo 122, 23420 Benkovac</span></p>
 </section>
+
 <footer>
   <p id="footer-text">© 2025 Asseria Gradnja</p>
   <button onclick="showLogin()" class="btn">🔑 Admin</button>
 </footer>
 
+<!-- Admin Login -->
 <div class="admin-login" id="admin-login">
   <h3>Prijava</h3>
-  <input type="text" id="loginUser" placeholder="Korisničko ime">
+  <input type="email" id="loginUser" placeholder="Email">
   <input type="password" id="loginPass" placeholder="Lozinka">
   <button onclick="login()" class="btn">Login</button>
   <button onclick="hideLogin()" class="btn">Zatvori</button>
 </div>
 
+<!-- Admin Panel -->
 <div class="admin-panel" id="admin-panel">
   <h3>Admin panel</h3>
   <div class="tabs">
@@ -89,8 +93,6 @@
     <button onclick="openTab('footer')">Footer</button>
   </div>
   <div id="tab-general" class="tab-content">
-    <h4>Logo</h4><input type="file" id="logoInput">
-    <h4>Pozadina</h4><input type="file" id="bgInput">
     <h4>Hero naslov</h4><input id="heroTitleInput">
     <h4>Hero opis</h4><input id="heroSubInput">
     <button onclick="saveGeneral()" class="btn">Spremi</button>
@@ -128,57 +130,155 @@
 </div>
 
 <script>
-const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||'null'):localStorage.setItem(k,JSON.stringify(v));
-function showLogin(){document.getElementById('admin-login').style.display='block'}
-function hideLogin(){document.getElementById('admin-login').style.display='none'}
-function login(){const u=document.getElementById('loginUser').value;const p=document.getElementById('loginPass').value;if(u==='admin'&&p==='admin123'){document.getElementById('admin-login').style.display='none';document.getElementById('admin-panel').style.display='block'}else alert('Krivi podaci')}
-function hideAdmin(){document.getElementById('admin-panel').style.display='none'}
-function openTab(t){document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active')}
-function fileToBase64(file,cb){const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file)}
+  // 🔥 Firebase config – OVDJE ubaciš svoj config iz Firebase konzole
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  const storage = firebase.storage();
 
-// General
-function saveGeneral(){document.getElementById('hero-title').innerText=heroTitleInput.value;LS('hero-title',heroTitleInput.value);document.getElementById('hero-sub').innerText=heroSubInput.value;LS('hero-sub',heroSubInput.value)}
-document.getElementById('logoInput').onchange=e=>fileToBase64(e.target.files[0],b64=>{document.getElementById('logo').src=b64;LS('logo',b64)});
-document.getElementById('bgInput').onchange=e=>fileToBase64(e.target.files[0],b64=>{document.getElementById('hero').style.backgroundImage=`url(${b64})`;LS('hero-bg',b64)});
+  // Helperi
+  function showLogin(){ document.getElementById('admin-login').style.display='block'; }
+  function hideLogin(){ document.getElementById('admin-login').style.display='none'; }
+  function hideAdmin(){ document.getElementById('admin-panel').style.display='none'; }
+  function openTab(t){ document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active')); document.getElementById('tab-'+t).classList.add('active'); }
 
-// About
-function saveAbout(){document.getElementById('about-title').innerText=aboutTitleInput.value;LS('about-title',aboutTitleInput.value);document.getElementById('about-text').innerText=aboutTextInput.value;LS('about-text',aboutTextInput.value)}
+  // Login
+  function login(){
+    const email=document.getElementById('loginUser').value;
+    const pass=document.getElementById('loginPass').value;
+    auth.signInWithEmailAndPassword(email,pass)
+      .then(()=>{ document.getElementById('admin-login').style.display='none'; document.getElementById('admin-panel').style.display='block'; })
+      .catch(err=>alert("Greška: "+err.message));
+  }
 
-// Services
-function renderServices(){const s=LS('services')||[];services.innerHTML='';servicesAdmin.innerHTML='';s.forEach((x,i)=>{services.innerHTML+=`<li>${x.name} - ${x.desc}</li>`;servicesAdmin.innerHTML+=`<li>${x.name} - ${x.desc} <button onclick="delService(${i})">X</button></li>`})}
-function addService(){const s=LS('services')||[];s.push({name:svcName.value,desc:svcDesc.value});LS('services',s);renderServices()}
-function delService(i){const s=LS('services')||[];s.splice(i,1);LS('services',s);renderServices()}
+  // --- Firestore & Storage funkcije ---
+  async function saveGeneral(){
+    await db.collection("content").doc("general").set({
+      heroTitle: heroTitleInput.value,
+      heroSub: heroSubInput.value
+    });
+  }
 
-// Gallery
-function renderGallery(){const g=LS('gallery')||[];gallery.innerHTML='';galleryAdmin.innerHTML='';g.forEach((src,i)=>{gallery.innerHTML+=`<img src="${src}">`;galleryAdmin.innerHTML+=`<div><img src="${src}" width="80"><button onclick="delGallery(${i})">X</button></div>`})}
-function addGallery(){const f=galInput.files[0];if(!f)return;fileToBase64(f,b64=>{const g=LS('gallery')||[];g.push(b64);LS('gallery',g);renderGallery()})}
-function delGallery(i){const g=LS('gallery')||[];g.splice(i,1);LS('gallery',g);renderGallery()}
+  async function saveAbout(){
+    await db.collection("content").doc("about").set({
+      title: aboutTitleInput.value,
+      text: aboutTextInput.value
+    });
+  }
 
-// Shop
-function renderShop(){const s=LS('shop')||[];shop.innerHTML='';shopAdmin.innerHTML='';s.forEach((it,i)=>{shop.innerHTML+=`<div><img src="${it.img}"><h4>${it.name}</h4><p>${it.price} €</p></div>`;shopAdmin.innerHTML+=`<div><img src="${it.img}" width="80"><b>${it.name}</b> ${it.price}€ <button onclick="delItem(${i})">X</button></div>`})}
-function addItem(){const f=itemImg.files[0];if(!f)return;fileToBase64(f,b64=>{const s=LS('shop')||[];s.push({name:itemName.value,price:itemPrice.value,img:b64});LS('shop',s);renderShop()})}
-function delItem(i){const s=LS('shop')||[];s.splice(i,1);LS('shop',s);renderShop()}
+  async function addService(){
+    await db.collection("services").add({
+      name: svcName.value,
+      desc: svcDesc.value
+    });
+  }
 
-// Contact
-function saveContact(){document.getElementById('contact-phone').innerText=contactPhoneInput.value;LS('contact-phone',contactPhoneInput.value);document.getElementById('contact-email').innerText=contactEmailInput.value;LS('contact-email',contactEmailInput.value);document.getElementById('contact-address').innerText=contactAddressInput.value;LS('contact-address',contactAddressInput.value)}
+  async function addGallery(){
+    const file = document.getElementById("galInput").files[0];
+    if(!file) return;
+    const ref = storage.ref("gallery/"+file.name);
+    await ref.put(file);
+    const url = await ref.getDownloadURL();
+    await db.collection("gallery").add({ url });
+  }
 
-// Footer
-function saveFooter(){document.getElementById('footer-text').innerText=footerTextInput.value;LS('footer-text',footerTextInput.value)}
+  async function addItem(){
+    const file=document.getElementById("itemImg").files[0];
+    if(!file) return;
+    const ref=storage.ref("shop/"+file.name);
+    await ref.put(file);
+    const url=await ref.getDownloadURL();
+    await db.collection("shop").add({
+      name:itemName.value,
+      price:itemPrice.value,
+      img:url
+    });
+  }
 
-// Load saved data
-window.onload=()=>{
-  if(LS('logo'))document.getElementById('logo').src=LS('logo');
-  if(LS('hero-bg'))document.getElementById('hero').style.backgroundImage=`url(${LS('hero-bg')})`;
-  if(LS('hero-title'))document.getElementById('hero-title').innerText=LS('hero-title');
-  if(LS('hero-sub'))document.getElementById('hero-sub').innerText=LS('hero-sub');
-  if(LS('about-title'))document.getElementById('about-title').innerText=LS('about-title');
-  if(LS('about-text'))document.getElementById('about-text').innerText=LS('about-text');
-  if(LS('contact-phone'))document.getElementById('contact-phone').innerText=LS('contact-phone');
-  if(LS('contact-email'))document.getElementById('contact-email').innerText=LS('contact-email');
-  if(LS('contact-address'))document.getElementById('contact-address').innerText=LS('contact-address');
-  if(LS('footer-text'))document.getElementById('footer-text').innerText=LS('footer-text');
-  renderServices();renderGallery();renderShop();
-}
+  async function saveContact(){
+    await db.collection("content").doc("contact").set({
+      phone: contactPhoneInput.value,
+      email: contactEmailInput.value,
+      address: contactAddressInput.value
+    });
+  }
+
+  async function saveFooter(){
+    await db.collection("content").doc("footer").set({
+      text: footerTextInput.value
+    });
+  }
+
+  // --- Real-time čitanje ---
+  db.collection("content").doc("general").onSnapshot(doc=>{
+    if(doc.exists){
+      const d=doc.data();
+      document.getElementById("hero-title").innerText=d.heroTitle||"";
+      document.getElementById("hero-sub").innerText=d.heroSub||"";
+    }
+  });
+
+  db.collection("content").doc("about").onSnapshot(doc=>{
+    if(doc.exists){
+      const d=doc.data();
+      document.getElementById("about-title").innerText=d.title||"";
+      document.getElementById("about-text").innerText=d.text||"";
+    }
+  });
+
+  db.collection("services").onSnapshot(snap=>{
+    const ul=document.getElementById("services"); ul.innerHTML="";
+    const adminUl=document.getElementById("servicesAdmin"); adminUl.innerHTML="";
+    snap.forEach(doc=>{
+      const d=doc.data();
+      ul.innerHTML+=`<li>${d.name} - ${d.desc}</li>`;
+      adminUl.innerHTML+=`<li>${d.name} - ${d.desc}</li>`;
+    });
+  });
+
+  db.collection("gallery").onSnapshot(snap=>{
+    const g=document.getElementById("gallery"); g.innerHTML="";
+    const gAdmin=document.getElementById("galleryAdmin"); gAdmin.innerHTML="";
+    snap.forEach(doc=>{
+      const d=doc.data();
+      g.innerHTML+=`<img src="${d.url}" width="200">`;
+      gAdmin.innerHTML+=`<div><img src="${d.url}" width="80"></div>`;
+    });
+  });
+
+  db.collection("shop").onSnapshot(snap=>{
+    const s=document.getElementById("shop-items"); s.innerHTML="";
+    const sAdmin=document.getElementById("shopAdmin"); sAdmin.innerHTML="";
+    snap.forEach(doc=>{
+      const d=doc.data();
+      s.innerHTML+=`<div><img src="${d.img}" width="100"><h4>${d.name}</h4><p>${d.price} €</p></div>`;
+      sAdmin.innerHTML+=`<div><img src="${d.img}" width="80">${d.name} ${d.price}€</div>`;
+    });
+  });
+
+  db.collection("content").doc("contact").onSnapshot(doc=>{
+    if(doc.exists){
+      const d=doc.data();
+      document.getElementById("contact-phone").innerText=d.phone||"";
+      document.getElementById("contact-email").innerText=d.email||"";
+      document.getElementById("contact-address").innerText=d.address||"";
+    }
+  });
+
+  db.collection("content").doc("footer").onSnapshot(doc=>{
+    if(doc.exists){
+      document.getElementById("footer-text").innerText=doc.data().text||"";
+    }
+  });
+
 </script>
 </body>
 </html>
