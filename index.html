@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Asseria Gradnja - Admin verzija</title>
+  <style>
+    body{font-family:sans-serif;margin:0;padding:0;background:#f4f4f4;color:#222}
+    header{min-height:300px;background-size:cover;background-position:center;color:#fff;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative}
+    header .overlay{position:absolute;inset:0;background:rgba(0,0,0,.4)}
+    header .content{position:relative;z-index:1}
+    header img{width:120px;height:auto;border-radius:8px;margin-bottom:1rem}
+    nav{background:#222;color:#fff;text-align:center;padding:.5rem}
+    nav a{color:#fff;text-decoration:none;margin:0 1rem}
+    section{padding:2rem;max-width:1000px;margin:auto}
+    h2{color:#c8102e}
+    .gallery,.shop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+    .gallery img,.shop img{width:100%;border-radius:6px}
+    footer{background:#222;color:#fff;text-align:center;padding:1rem}
+    .admin-login,.admin-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:1rem;border:1px solid #ccc;border-radius:8px;z-index:1000;display:none;width:320px}
+    input,textarea,button{width:100%;margin:.3rem 0;padding:.5rem}
+    .btn{background:#c8102e;color:#fff;border:none;border-radius:5px;cursor:pointer}
+    .tabs{display:flex;gap:.5rem;margin-bottom:1rem}
+    .tabs button{flex:1;padding:.5rem}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+  </style>
+</head>
+<body>
+<header id="hero">
+  <div class="overlay"></div>
+  <div class="content">
+    <img id="logo" src="logo.png" alt="Logo">
+    <h1 id="hero-title">Asseria Gradnja</h1>
+    <p id="hero-sub">Uređenje enterijera i eksterijera • Ključ u ruke</p>
+  </div>
+</header>
+<nav>
+  <a href="#onama">O nama</a>
+  <a href="#usluge">Usluge</a>
+  <a href="#galerija">Galerija</a>
+  <a href="#shop">Shop</a>
+  <a href="#kontakt">Kontakt</a>
+</nav>
+<section id="onama">
+  <h2 id="about-title">O nama</h2>
+  <p id="about-text">Mi smo specijalizirani za renoviranje kuća i stanova, te niskogradnju po sistemu ključ u ruke.</p>
+</section>
+<section id="usluge">
+  <h2 id="services-title">Naše usluge</h2>
+  <ul id="services"></ul>
+</section>
+<section id="galerija">
+  <h2>Galerija</h2>
+  <div class="gallery" id="gallery"></div>
+</section>
+<section id="shop">
+  <h2>Web shop</h2>
+  <div class="shop" id="shop"></div>
+</section>
+<section id="kontakt">
+  <h2>Kontakt</h2>
+  <p>📞 <span id="contact-phone">+385 91 123 4567</span></p>
+  <p>✉️ <span id="contact-email">info@asseria-gradnja.hr</span></p>
+  <p>📍 <span id="contact-address">Benkovačko selo 122, 23420 Benkovac</span></p>
+</section>
+<footer>
+  <p id="footer-text">© 2025 Asseria Gradnja</p>
+  <button onclick="showLogin()" class="btn">🔑 Admin</button>
+</footer>
+
+<div class="admin-login" id="admin-login">
+  <h3>Prijava</h3>
+  <input type="text" id="loginUser" placeholder="Korisničko ime">
+  <input type="password" id="loginPass" placeholder="Lozinka">
+  <button onclick="login()" class="btn">Login</button>
+  <button onclick="hideLogin()" class="btn">Zatvori</button>
+</div>
+
+<div class="admin-panel" id="admin-panel">
+  <h3>Admin panel</h3>
+  <div class="tabs">
+    <button onclick="openTab('general')">Općenito</button>
+    <button onclick="openTab('about')">O nama</button>
+    <button onclick="openTab('services')">Usluge</button>
+    <button onclick="openTab('gallery')">Galerija</button>
+    <button onclick="openTab('shop')">Shop</button>
+    <button onclick="openTab('contact')">Kontakt</button>
+    <button onclick="openTab('footer')">Footer</button>
+  </div>
+  <div id="tab-general" class="tab-content">
+    <h4>Logo</h4><input type="file" id="logoInput">
+    <h4>Pozadina</h4><input type="file" id="bgInput">
+    <h4>Hero naslov</h4><input id="heroTitleInput">
+    <h4>Hero opis</h4><input id="heroSubInput">
+    <button onclick="saveGeneral()" class="btn">Spremi</button>
+  </div>
+  <div id="tab-about" class="tab-content">
+    <h4>O nama naslov</h4><input id="aboutTitleInput">
+    <h4>O nama tekst</h4><textarea id="aboutTextInput"></textarea>
+    <button onclick="saveAbout()" class="btn">Spremi</button>
+  </div>
+  <div id="tab-services" class="tab-content">
+    <input id="svcName" placeholder="Naziv"><input id="svcDesc" placeholder="Opis">
+    <button onclick="addService()" class="btn">Dodaj</button>
+    <ul id="servicesAdmin"></ul>
+  </div>
+  <div id="tab-gallery" class="tab-content">
+    <input type="file" id="galInput"><button onclick="addGallery()" class="btn">Dodaj</button>
+    <div id="galleryAdmin"></div>
+  </div>
+  <div id="tab-shop" class="tab-content">
+    <input id="itemName" placeholder="Naziv"><input id="itemPrice" placeholder="Cijena">
+    <input type="file" id="itemImg"><button onclick="addItem()" class="btn">Dodaj</button>
+    <div id="shopAdmin"></div>
+  </div>
+  <div id="tab-contact" class="tab-content">
+    <h4>Telefon</h4><input id="contactPhoneInput">
+    <h4>Email</h4><input id="contactEmailInput">
+    <h4>Adresa</h4><input id="contactAddressInput">
+    <button onclick="saveContact()" class="btn">Spremi</button>
+  </div>
+  <div id="tab-footer" class="tab-content">
+    <h4>Footer tekst</h4><input id="footerTextInput">
+    <button onclick="saveFooter()" class="btn">Spremi</button>
+  </div>
+  <button onclick="hideAdmin()" class="btn">Zatvori</button>
+</div>
+
+<script>
+const LS=(k,v)=>v===undefined?JSON.parse(localStorage.getItem(k)||'null'):localStorage.setItem(k,JSON.stringify(v));
+function showLogin(){document.getElementById('admin-login').style.display='block'}
+function hideLogin(){document.getElementById('admin-login').style.display='none'}
+function login(){const u=document.getElementById('loginUser').value;const p=document.getElementById('loginPass').value;if(u==='admin'&&p==='admin123'){document.getElementById('admin-login').style.display='none';document.getElementById('admin-panel').style.display='block'}else alert('Krivi podaci')}
+function hideAdmin(){document.getElementById('admin-panel').style.display='none'}
+function openTab(t){document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active')}
+function fileToBase64(file,cb){const r=new FileReader();r.onload=e=>cb(e.target.result);r.readAsDataURL(file)}
+
+// General
+function saveGeneral(){document.getElementById('hero-title').innerText=heroTitleInput.value;LS('hero-title',heroTitleInput.value);document.getElementById('hero-sub').innerText=heroSubInput.value;LS('hero-sub',heroSubInput.value)}
+document.getElementById('logoInput').onchange=e=>fileToBase64(e.target.files[0],b64=>{document.getElementById('logo').src=b64;LS('logo',b64)});
+document.getElementById('bgInput').onchange=e=>fileToBase64(e.target.files[0],b64=>{document.getElementById('hero').style.backgroundImage=`url(${b64})`;LS('hero-bg',b64)});
+
+// About
+function saveAbout(){document.getElementById('about-title').innerText=aboutTitleInput.value;LS('about-title',aboutTitleInput.value);document.getElementById('about-text').innerText=aboutTextInput.value;LS('about-text',aboutTextInput.value)}
+
+// Services
+function renderServices(){const s=LS('services')||[];services.innerHTML='';servicesAdmin.innerHTML='';s.forEach((x,i)=>{services.innerHTML+=`<li>${x.name} - ${x.desc}</li>`;servicesAdmin.innerHTML+=`<li>${x.name} - ${x.desc} <button onclick="delService(${i})">X</button></li>`})}
+function addService(){const s=LS('services')||[];s.push({name:svcName.value,desc:svcDesc.value});LS('services',s);renderServices()}
+function delService(i){const s=LS('services')||[];s.splice(i,1);LS('services',s);renderServices()}
+
+// Gallery
+function renderGallery(){const g=LS('gallery')||[];gallery.innerHTML='';galleryAdmin.innerHTML='';g.forEach((src,i)=>{gallery.innerHTML+=`<img src="${src}">`;galleryAdmin.innerHTML+=`<div><img src="${src}" width="80"><button onclick="delGallery(${i})">X</button></div>`})}
+function addGallery(){const f=galInput.files[0];if(!f)return;fileToBase64(f,b64=>{const g=LS('gallery')||[];g.push(b64);LS('gallery',g);renderGallery()})}
+function delGallery(i){const g=LS('gallery')||[];g.splice(i,1);LS('gallery',g);renderGallery()}
+
+// Shop
+function renderShop(){const s=LS('shop')||[];shop.innerHTML='';shopAdmin.innerHTML='';s.forEach((it,i)=>{shop.innerHTML+=`<div><img src="${it.img}"><h4>${it.name}</h4><p>${it.price} €</p></div>`;shopAdmin.innerHTML+=`<div><img src="${it.img}" width="80"><b>${it.name}</b> ${it.price}€ <button onclick="delItem(${i})">X</button></div>`})}
+function addItem(){const f=itemImg.files[0];if(!f)return;fileToBase64(f,b64=>{const s=LS('shop')||[];s.push({name:itemName.value,price:itemPrice.value,img:b64});LS('shop',s);renderShop()})}
+function delItem(i){const s=LS('shop')||[];s.splice(i,1);LS('shop',s);renderShop()}
+
+// Contact
+function saveContact(){document.getElementById('contact-phone').innerText=contactPhoneInput.value;LS('contact-phone',contactPhoneInput.value);document.getElementById('contact-email').innerText=contactEmailInput.value;LS('contact-email',contactEmailInput.value);document.getElementById('contact-address').innerText=contactAddressInput.value;LS('contact-address',contactAddressInput.value)}
+
+// Footer
+function saveFooter(){document.getElementById('footer-text').innerText=footerTextInput.value;LS('footer-text',footerTextInput.value)}
+
+// Load saved data
+window.onload=()=>{
+  if(LS('logo'))document.getElementById('logo').src=LS('logo');
+  if(LS('hero-bg'))document.getElementById('hero').style.backgroundImage=`url(${LS('hero-bg')})`;
+  if(LS('hero-title'))document.getElementById('hero-title').innerText=LS('hero-title');
+  if(LS('hero-sub'))document.getElementById('hero-sub').innerText=LS('hero-sub');
+  if(LS('about-title'))document.getElementById('about-title').innerText=LS('about-title');
+  if(LS('about-text'))document.getElementById('about-text').innerText=LS('about-text');
+  if(LS('contact-phone'))document.getElementById('contact-phone').innerText=LS('contact-phone');
+  if(LS('contact-email'))document.getElementById('contact-email').innerText=LS('contact-email');
+  if(LS('contact-address'))document.getElementById('contact-address').innerText=LS('contact-address');
+  if(LS('footer-text'))document.getElementById('footer-text').innerText=LS('footer-text');
+  renderServices();renderGallery();renderShop();
+}
+</script>
+</body>
+</html>
