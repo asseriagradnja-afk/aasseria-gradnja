@@ -179,7 +179,24 @@ window.onload=()=>{
   if(LS('footer-text'))document.getElementById('footer-text').innerText=LS('footer-text');
   renderServices();renderGallery();renderShop();
 }
+
 </script>
+  async function addGallery(){
+  const file = document.getElementById("galInput").files[0];
+  if(!file) return;
+
+  // 1. Definiraj gdje će se spremiti u Storage
+  const ref = storage.ref("gallery/" + file.name);
+
+  // 2. Uploadaj fajl
+  await ref.put(file);
+
+  // 3. Uzmi javni URL
+  const url = await ref.getDownloadURL();
+
+  // 4. Spremi URL u Firestore bazu
+  await db.collection("gallery").add({ url });
+}
 </body>
 </html>
 
