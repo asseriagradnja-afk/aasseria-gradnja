@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asseria Gradnja</title>
+  <meta name="description" content="Asseria Gradnja - Uređenje enterijera i eksterijera, ključ u ruke, niskogradnja, prodaja građevinskog materijala i alata." />
+  <meta name="keywords" content="uređenje, gradnja, interijer, eksterijer, ključ u ruke, niskogradnja, webshop, građevina, Benkovac" />
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4; transition: background 0.3s, color 0.3s;}
+    body.dark {background:#222; color:#eee;}
+    header {background:url('pozadina.jpg') no-repeat center center/cover; color:white; text-align:center; padding:5rem 2rem; position:relative;}
+    header h1 {font-size:3rem;}
+    nav {background:#222; position:sticky; top:0; z-index:1000; text-align:center;}
+    nav a {color:white; margin:0 1rem; text-decoration:none; padding:1rem; display:inline-block;}
+    nav a:hover {background:#c8102e;}
+    section {padding:3rem 2rem; max-width:1200px; margin:auto;}
+    h2 {color:#c8102e; margin-bottom:1rem;}
+    .services {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1rem;}
+    .service {padding:1rem; text-align:center; background:white; border-radius:10px; transition: transform 0.3s;}
+    .service:hover {transform:scale(1.05);} 
+    .gallery, .shop {display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:1rem;}
+    .gallery img, .shop img {width:100%; border-radius:10px;}
+    .cart {margin-top:1rem; padding:1rem; border:1px solid #ccc; background:white; border-radius:10px;}
+    footer {background:#222; color:white; text-align:center; padding:2rem;}
+    footer button {margin-top:1rem;}
+    .admin-panel {display:none; padding:2rem; background:#fff; border:1px solid #ccc; border-radius:10px;}
+    body.dark .admin-panel {background:#333; color:#eee;}
+    .admin-panel input, .admin-panel button {margin:0.5rem;}
+    .dark-mode-toggle {position:fixed; top:1rem; right:1rem; background:#c8102e; color:white; border:none; padding:0.5rem 1rem; border-radius:5px; cursor:pointer;}
+  </style>
+</head>
+<body>
+  <button class="dark-mode-toggle">🌙 Dark Mode</button>
+  <header>
+    <h1>Asseria Gradnja</h1>
+    <p>Uređenje enterijera i eksterijera • Ključ u ruke • Niskogradnja</p>
+    <a href="#usluge" class="btn">Pogledaj usluge</a>
+    <a href="#kontakt" class="btn">Kontaktiraj nas</a>
+  </header>
+
+  <nav>
+    <a href="#onama">O nama</a>
+    <a href="#usluge">Usluge</a>
+    <a href="#galerija">Galerija</a>
+    <a href="#shop">Web shop</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+
+  <section id="onama">
+    <h2>O nama</h2>
+    <p>Mi smo Asseria Gradnja, specijalizirani za renoviranje kuća i stanova te izgradnju niskogradnje, sve po sistemu ključ u ruke. Naš tim stručnjaka garantira kvalitetu i preciznost.</p>
+  </section>
+
+  <section id="usluge">
+    <h2>Naše usluge</h2>
+    <div class="services">
+      <div class="service"><i class="fa-solid fa-paint-roller fa-2x"></i><h3>Renoviranje</h3><p>Stanovi i kuće ključ u ruke.</p></div>
+      <div class="service"><i class="fa-solid fa-tree fa-2x"></i><h3>Eksterijer</h3><p>Uređenje okućnica i fasada.</p></div>
+      <div class="service"><i class="fa-solid fa-helmet-safety fa-2x"></i><h3>Niskogradnja</h3><p>Izgradnja i projektiranje.</p></div>
+    </div>
+  </section>
+
+  <section id="galerija">
+    <h2>Galerija radova</h2>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section id="shop">
+    <h2>Web shop</h2>
+    <div class="shop" id="shop-items"></div>
+    <div class="cart" id="cart"><h3>Košarica</h3><ul id="cart-list"></ul><p>Ukupno: <span id="total">0</span> €</p></div>
+  </section>
+
+  <section id="kontakt">
+    <h2>Kontakt</h2>
+    <form id="contact-form">
+      <input type="text" id="name" placeholder="Ime" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <textarea id="message" placeholder="Poruka" required></textarea>
+      <button type="submit">Pošalji</button>
+    </form>
+    <div class="map">
+      <iframe src="https://www.google.com/maps?q=Benkovačko+selo+122,+23420+Benkovac&output=embed" width="100%" height="300" style="border:0;"></iframe>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Asseria Gradnja | asseria-gradnja.com.hr</p>
+    <button onclick="document.getElementById('admin').style.display='block'">🔑 Admin login</button>
+  </footer>
+
+  <div class="admin-panel" id="admin">
+    <h2>Admin panel</h2>
+    <input type="password" id="admin-pass" placeholder="Lozinka" />
+    <button onclick="loginAdmin()">Login</button>
+    <div id="admin-tools" style="display:none;">
+      <h3>Dodaj sliku u galeriju</h3>
+      <input type="text" id="img-url" placeholder="URL slike" />
+      <button onclick="addImage()">Dodaj</button>
+      <h3>Dodaj artikal u shop</h3>
+      <input type="text" id="item-name" placeholder="Naziv" />
+      <input type="number" id="item-price" placeholder="Cijena (€)" />
+      <input type="text" id="item-img" placeholder="URL slike" />
+      <button onclick="addItem()">Dodaj</button>
+    </div>
+  </div>
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+
+    document.querySelector('.dark-mode-toggle').onclick = () => {
+      document.body.classList.toggle('dark');
+    };
+
+    let gallery = JSON.parse(localStorage.getItem('gallery')) || [];
+    let shop = JSON.parse(localStorage.getItem('shop')) || [];
+    let cart = [];
+
+    function renderGallery() {
+      const g = document.getElementById('gallery');
+      g.innerHTML = '';
+      gallery.forEach((src, i) => {
+        g.innerHTML += `<div><img src="${src}" /><button onclick="removeImage(${i})">Obriši</button></div>`;
+      });
+    }
+
+    function renderShop() {
+      const s = document.getElementById('shop-items');
+      s.innerHTML = '';
+      shop.forEach((item, i) => {
+        s.innerHTML += `<div><img src="${item.img}" /><h4>${item.name}</h4><p>${item.price} €</p><button onclick="addToCart(${i})">Dodaj u košaricu</button><button onclick="removeItem(${i})">Obriši</button></div>`;
+      });
+    }
+
+    function renderCart() {
+      const c = document.getElementById('cart-list');
+      c.innerHTML = '';
+      let total = 0;
+      cart.forEach(item => {
+        c.innerHTML += `<li>${item.name} - ${item.price} €</li>`;
+        total += item.price;
+      });
+      document.getElementById('total').innerText = total;
+    }
+
+    function loginAdmin() {
+      if (document.getElementById('admin-pass').value === 'admin123') {
+        document.getElementById('admin-tools').style.display = 'block';
+      } else alert('Pogrešna lozinka!');
+    }
+
+    function addImage() {
+      const url = document.getElementById('img-url').value;
+      if (url) {gallery.push(url); localStorage.setItem('gallery', JSON.stringify(gallery)); renderGallery();}
+    }
+    function removeImage(i) {
+      gallery.splice(i,1); localStorage.setItem('gallery', JSON.stringify(gallery)); renderGallery();
+    }
+
+    function addItem() {
+      const name = document.getElementById('item-name').value;
+      const price = parseFloat(document.getElementById('item-price').value);
+      const img = document.getElementById('item-img').value;
+      if (name && price && img) {shop.push({name, price, img}); localStorage.setItem('shop', JSON.stringify(shop)); renderShop();}
+    }
+    function removeItem(i) {
+      shop.splice(i,1); localStorage.setItem('shop', JSON.stringify(shop)); renderShop();
+    }
+    function addToCart(i) {
+      cart.push(shop[i]); renderCart();
+    }
+
+    document.getElementById('contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      alert('Poruka poslana!');
+    });
+
+    renderGallery();
+    renderShop();
+    renderCart();
+  </script>
+</body>
+</html>
